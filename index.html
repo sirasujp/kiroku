@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="STUDY LEAGUE">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>STUDY LEAGUE</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151d31;--line:#2a3855;--text:#f4f7ff;--muted:#9aa9c4;--green:#55d6a2;--blue:#77a9ff;--red:#ff7b87}
+*{box-sizing:border-box}html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#263b67 0,#0b1020 42%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100svh;overscroll-behavior-y:contain}
+button,input{font:inherit}button{touch-action:manipulation}
+.wrap{max-width:760px;margin:auto;padding:calc(18px + env(safe-area-inset-top)) 15px calc(30px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.brand{font-weight:900;letter-spacing:2px;font-size:14px;color:#b9c9e8}.week{font-size:11px;color:var(--muted);background:#1a2740;padding:8px 10px;border-radius:20px}
+.hero{background:linear-gradient(135deg,#263e69,#192844 60%,#302a55);border:1px solid #40567d;border-radius:22px;padding:19px;box-shadow:0 14px 40px #0005}
+.eyebrow{font-size:10px;letter-spacing:1.7px;color:#b7c9ed;font-weight:800}.rankline{display:flex;align-items:center;gap:13px;margin:10px 0}.emblem{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;font-size:30px;background:#ffffff18;border:1px solid #ffffff35;flex:none}.rankname{font-size:clamp(21px,6vw,26px);font-weight:900}.sub{color:#c2d0e8;font-size:12px;margin-top:3px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.stat{background:#0c1730a8;border:1px solid #ffffff16;border-radius:13px;padding:10px;min-width:0}.stat small{display:block;color:#aebfdd;font-size:10px}.stat b{font-size:clamp(17px,5vw,20px);display:block;margin-top:3px;overflow-wrap:anywhere}
+.tabs{display:flex;gap:7px;margin:15px 0;position:sticky;top:env(safe-area-inset-top);z-index:5;background:#0b1020e8;padding:5px 0;backdrop-filter:blur(12px)}
+.tab{border:1px solid var(--line);background:#111a2d;color:var(--muted);padding:12px 7px;border-radius:12px;font-weight:750;cursor:pointer;flex:1;font-size:13px}.tab.active{background:#263b60;color:#fff;border-color:#5875a8}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:13px}.card h2{font-size:15px;margin:0 0 12px}.muted{color:var(--muted)}
+.timer{text-align:center;padding:7px 0 13px}.clock{font-size:clamp(48px,14vw,68px);font-weight:900;letter-spacing:2px;font-variant-numeric:tabular-nums}.timerhint{font-size:12px;color:var(--muted);margin:5px 0 14px;min-height:18px}
+.btnrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:13px 16px;font-weight:800;font-size:14px;cursor:pointer;min-height:46px}.primary{background:var(--green);color:#09251b}.secondary{background:#293955;color:#eaf1ff;border:1px solid #405476}.warn{background:#50313b;color:#ffdce0}
+.manual{display:flex;gap:8px;margin-top:12px}.manual input,.goal-input{min-width:0;background:#0e1729;border:1px solid var(--line);border-radius:10px;color:white;padding:12px;font-size:16px}.manual input{flex:1;width:60%}
+.progress{height:9px;background:#0b1425;border-radius:10px;overflow:hidden;margin:9px 0}.progress span{height:100%;display:block;background:linear-gradient(90deg,#65d9ae,#77a9ff);border-radius:10px;transition:width .25s}
+.row{display:flex;align-items:center;gap:9px;padding:11px 8px;border-bottom:1px solid #293650}.row:last-child{border:0}.pos{width:23px;text-align:center;font-weight:900;color:#9eb0cf}.avatar{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:#263650;font-size:18px;flex:none}.who{flex:1;min-width:0}.who b{font-size:13px}.who small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.xp{text-align:right;font-weight:900;font-size:14px;white-space:nowrap}.xp small{display:block;color:var(--muted);font-size:10px;font-weight:500}.me{background:#203657;border:1px solid #42618e;border-radius:12px;margin:5px 0}.up{color:var(--green)}.down{color:var(--red)}
+.notice{font-size:11px;color:var(--muted);line-height:1.65}.leaguegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.league{background:#101a2d;border:1px solid var(--line);border-radius:12px;padding:11px}.league b{display:block;font-size:12px}.league small{color:var(--muted);font-size:10px}.hidden{display:none!important}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#e8fff5;color:#103326;padding:12px 16px;border-radius:12px;font-weight:800;box-shadow:0 8px 30px #0007;display:none;max-width:90%;text-align:center;z-index:20}
+.install-guide{border:1px solid #506b95;background:#172742;border-radius:14px;padding:13px;margin:0 0 14px;font-size:12px;line-height:1.65}.install-guide b{color:#fff}.install-guide button{float:right;background:transparent;color:#c9d8f1;border:0;font-size:18px;padding:0 4px}
+footer{text-align:center;color:#72819d;font-size:10px;margin-top:20px;padding-bottom:5px}
+@media(min-width:650px){.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:13px}.grid2 .card{height:100%}}
+@media(max-width:360px){.stat{padding:8px}.stat small{font-size:9px}.btn{padding:12px 11px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><div class="brand">⚡ STUDY LEAGUE</div><div class="week" id="weekLabel">WEEK --</div></div>
+ <div class="install-guide" id="installGuide"><button aria-label="閉じる" id="closeGuide">×</button><b>📲 iPhoneにアプリとして追加</b><br>Safariの共有ボタン <b>□↑</b> →「ホーム画面に追加」→「追加」。次回からアイコンで開けるよ。</div>
+ <section class="hero">
+  <div class="eyebrow">YOUR CURRENT LEAGUE</div>
+  <div class="rankline"><div class="emblem" id="rankIcon">🥉</div><div><div class="rankname" id="rankName">BRONZE III</div><div class="sub" id="rankSub">昇格を目指そう</div></div></div>
+  <div class="stats">
+   <div class="stat"><small>今週のXP</small><b id="weeklyXP">0</b></div>
+   <div class="stat"><small>累計レベル</small><b id="level">Lv.1</b></div>
+   <div class="stat"><small>連続日数</small><b id="streak">0日</b></div>
+  </div>
+ </section>
+ <div class="tabs">
+  <button class="tab active" data-tab="league">🏆 リーグ</button>
+  <button class="tab" data-tab="study">⏱ 勉強する</button>
+  <button class="tab" data-tab="profile">📊 成績</button>
+ </div>
+ <section id="leagueView">
+  <div class="card">
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>週間ランキング</h2><span class="muted" style="font-size:10px">毎週 月曜 0:00 更新</span></div>
+   <div style="display:flex;gap:12px;font-size:10px;margin-bottom:10px"><span class="up">▲ 1〜3位 昇格</span><span class="down">▼ 下位2名 降格</span></div>
+   <div id="leaderboard"></div>
+   <div class="notice" style="margin-top:10px">AIライバルはアプリ内シミュレーション。実際の対人戦ではありません。</div>
+  </div>
+  <div class="card"><h2>昇格まで</h2><div id="promotionText" class="muted" style="font-size:13px"></div><div class="progress"><span id="promotionBar" style="width:0%"></span></div><div class="notice">上位3人に入ると次週から1リーグ昇格。下位2人は降格します。</div></div>
+ </section>
+ <section id="studyView" class="hidden">
+  <div class="grid2">
+   <div class="card">
+    <h2>集中タイマー</h2><div class="timer"><div class="clock" id="clock">00:00</div><div class="timerhint" id="timerHint">集中した時間がXPになる</div>
+    <div class="btnrow"><button class="btn primary" id="startBtn">スタート</button><button class="btn secondary" id="pauseBtn">一時停止</button><button class="btn warn" id="finishBtn">終了・記録</button></div></div>
+    <div class="manual"><input id="manualMinutes" type="number" min="1" max="1440" inputmode="numeric" placeholder="手動で分数を入力"><button class="btn secondary" id="addManual">追加</button></div>
+    <div class="notice" style="margin-top:10px">勉強1分 = 1 XP。タイマーは画面を閉じても経過時間を保持します。</div>
+   </div>
+   <div class="card">
+    <h2>今日の進捗</h2><div style="font-size:30px;font-weight:900" id="todayMinutes">0分</div><div class="muted" style="font-size:11px">今日の勉強時間</div>
+    <div class="progress"><span id="dailyBar" style="width:0%"></span></div><div class="notice" id="dailyGoalText">目標 120分まであと120分</div>
+    <div style="margin-top:17px"><label class="muted" style="font-size:11px" for="goalInput">1日の目標（分）</label><input class="goal-input" id="goalInput" type="number" min="10" max="1440" value="120" inputmode="numeric" style="width:100%;margin-top:6px"></div>
+   </div>
+  </div>
+ </section>
+ <section id="profileView" class="hidden">
+  <div class="card"><h2>あなたの成績</h2><div class="stats">
+   <div class="stat"><small>累計勉強時間</small><b id="totalHours">0h</b></div><div class="stat"><small>累計XP</small><b id="totalXP">0</b></div><div class="stat"><small>最高リーグ</small><b id="highest">BRONZE III</b></div>
+  </div></div>
+  <div class="card"><h2>リーグ一覧</h2><div class="leaguegrid" id="leagueGrid"></div></div>
+  <div class="card"><h2>データ管理</h2><div class="btnrow" style="justify-content:flex-start"><button class="btn secondary" id="exportBtn">データを書き出す</button><label class="btn secondary" for="importFile" style="display:inline-flex;align-items:center">データを読み込む</label><input id="importFile" type="file" accept="application/json" hidden><button class="btn warn" id="resetBtn">最初からやり直す</button></div><p class="notice">記録はこのiPhoneのSafari内に保存されます。念のため定期的にデータを書き出してください。SafariのWebサイトデータを消すと記録が消える場合があります。</p></div>
+ </section>
+ <footer>STUDY LEAGUE · 勉強を積み上げて、頂点へ。</footer>
+</div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const tiers=[
+ {name:"BRONZE III",icon:"🥉"},{name:"BRONZE II",icon:"🥉"},{name:"BRONZE I",icon:"🥉"},
+ {name:"SILVER III",icon:"🥈"},{name:"SILVER II",icon:"🥈"},{name:"SILVER I",icon:"🥈"},
+ {name:"GOLD III",icon:"🥇"},{name:"GOLD II",icon:"🥇"},{name:"GOLD I",icon:"🥇"},
+ {name:"PLATINUM III",icon:"💠"},{name:"PLATINUM II",icon:"💠"},{name:"PLATINUM I",icon:"💠"},
+ {name:"DIAMOND III",icon:"💎"},{name:"DIAMOND II",icon:"💎"},{name:"DIAMOND I",icon:"💎"},{name:"MASTER",icon:"👑"}
+];
+const bots=[
+ {name:"Aoi",emoji:"🦊",pace:32},{name:"Kaito",emoji:"🐺",pace:25},{name:"Mina",emoji:"🐱",pace:22},
+ {name:"Ren",emoji:"🐼",pace:18},{name:"Yuna",emoji:"🦉",pace:16},{name:"Sora",emoji:"🐸",pace:14},
+ {name:"Haru",emoji:"🐯",pace:12},{name:"Riku",emoji:"🐧",pace:10},{name:"Nico",emoji:"🐻",pace:8}
+];
+const $=id=>document.getElementById(id);
+const dayKey=(d=new Date())=>`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+function mondayKey(d=new Date()){let x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-(x.getDay()+6)%7);return dayKey(x)}
+function weekLabel(){let d=new Date();d.setDate(d.getDate()-(d.getDay()+6)%7);return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")} START`}
+function seed(s){let h=2166136261;for(let c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0}
+function rand(s){let x=seed(s);return()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296}}
+function fresh(){let w=mondayKey(),r=rand(w);return{week:w,tier:0,highest:0,totalXP:0,weeklyXP:0,days:{},streak:0,lastStudyDay:"",goal:120,bots:bots.map(b=>({...b,base:Math.round(b.pace*7*(.55+r()*.9))})),history:[],timer:{elapsed:0,startAt:null}}}
+let data;
+try{data=JSON.parse(localStorage.getItem("studyLeagueSave"))||fresh()}catch(e){data=fresh()}
+function save(){localStorage.setItem("studyLeagueSave",JSON.stringify(data))}
+function fmt(n){return Math.floor(n).toLocaleString("ja-JP")}
+function level(){return Math.floor(data.totalXP/500)+1}
+function aiScore(bot){let d=new Date(),day=(d.getDay()+6)%7,r=rand(data.week+bot.name),total=0;for(let i=0;i<=day;i++)total+=Math.round(bot.pace*(.65+r()*.7)*(i===day?((d.getHours()*60+d.getMinutes())/1440):1)*60);return total}
+function makeScores(){return[...data.bots.map(b=>({name:b.name,emoji:b.emoji,xp:aiScore(b),me:false})),{name:"あなた",emoji:"⭐",xp:data.weeklyXP,me:true}].sort((a,b)=>b.xp-a.xp)}
+function toast(s){let e=$("toast");e.textContent=s;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",2400)}
+function ensureWeek(){let w=mondayKey();if(data.week!==w){let rank=makeScores().findIndex(x=>x.me)+1,old=data.tier;if(rank<=3)data.tier=Math.min(15,data.tier+1);else if(rank>=9)data.tier=Math.max(0,data.tier-1);data.highest=Math.max(data.highest,data.tier);data.history.unshift({week:data.week,rank,tier:old,xp:data.weeklyXP});data.history=data.history.slice(0,12);data.week=w;data.weeklyXP=0;save();toast(rank<=3?"🎉 週間リーグ昇格！":rank>=9?"今週は降格。次週リベンジ！":"新しいリーグが始まった！")}}
+function render(){
+ ensureWeek();$("weekLabel").textContent=weekLabel();let t=tiers[data.tier];$("rankIcon").textContent=t.icon;$("rankName").textContent=t.name;$("rankSub").textContent=data.tier===15?"最高ランク到達！":`次のランク：${tiers[data.tier+1].name}`;
+ $("weeklyXP").textContent=fmt(data.weeklyXP);$("level").textContent="Lv."+level();$("streak").textContent=data.streak+"日";
+ let scores=makeScores();$("leaderboard").innerHTML=scores.map((x,i)=>`<div class="row ${x.me?"me":""}"><div class="pos">${i+1}</div><div class="avatar">${x.emoji}</div><div class="who"><b>${x.name}${x.me?"（あなた）":""}</b><small>${x.me?"YOUR SCORE":"AI RIVAL"}</small></div><div class="xp">${fmt(x.xp)}<small>XP</small></div></div>`).join("");
+ let rank=scores.findIndex(x=>x.me)+1,need=Math.max(0,rank-3);$("promotionText").textContent=rank<=3?`現在 ${rank}位！昇格圏内！この順位をキープしよう。`:`現在 ${rank}位。昇格圏まであと${need}人を追い越そう。`;$("promotionBar").style.width=(rank<=3?100:Math.max(5,100-(rank-3)*14))+"%";
+ let today=data.days[dayKey()]||0;$("todayMinutes").textContent=fmt(today)+"分";$("goalInput").value=data.goal;$("dailyBar").style.width=Math.min(100,today/data.goal*100)+"%";$("dailyGoalText").textContent=today>=data.goal?`目標達成！ +${fmt(today-data.goal)}分`:`目標 ${data.goal}分まであと${fmt(data.goal-today)}分`;
+ $("totalHours").textContent=(data.totalXP/60).toFixed(1)+"h";$("totalXP").textContent=fmt(data.totalXP);$("highest").textContent=tiers[data.highest].name;
+ $("leagueGrid").innerHTML=tiers.map((x,i)=>`<div class="league" style="${i===data.tier?'border-color:#77a9ff;background:#203657':''}"><b>${x.icon} ${x.name}</b><small>${i===data.tier?"CURRENT LEAGUE":i<data.tier?"CLEAR":"LOCKED"}</small></div>`).join("");clock();
+}
+function record(min){min=Math.floor(Number(min));if(!Number.isFinite(min)||min<1||min>1440)return toast("1〜1440分で入力してね");let xp=min;data.totalXP+=xp;data.weeklyXP+=xp;data.days[dayKey()]=(data.days[dayKey()]||0)+min;let today=dayKey();if(data.lastStudyDay!==today){let y=new Date();y.setDate(y.getDate()-1);data.streak=data.lastStudyDay===dayKey(y)?data.streak+1:1;data.lastStudyDay=today}save();render();toast(`${min}分勉強！ +${xp} XP`)}
+let timerTick=null;
+function elapsedNow(){let t=data.timer||{elapsed:0,startAt:null};return t.elapsed+(t.startAt?Math.max(0,Math.floor((Date.now()-t.startAt)/1000)):0)}
+function clock(){let sec=elapsedNow();$("clock").textContent=String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")}
+function start(){if(!data.timer)data.timer={elapsed:0,startAt:null};if(!data.timer.startAt){data.timer.startAt=Date.now();save();$("timerHint").textContent="集中中… 勉強に取り組もう";timerTick=setInterval(clock,500);clock()}}
+function pause(){if(data.timer?.startAt){data.timer.elapsed=elapsedNow();data.timer.startAt=null;save();clearInterval(timerTick);clock();$("timerHint").textContent="一時停止中"}}
+function finish(){pause();let mins=Math.floor((data.timer?.elapsed||0)/60);data.timer={elapsed:0,startAt:null};save();if(mins>0)record(mins);else{clock();toast("記録できる時間がありません")}$("timerHint").textContent="集中した時間がXPになる"}
+$("startBtn").onclick=start;$("pauseBtn").onclick=pause;$("finishBtn").onclick=finish;
+$("addManual").onclick=()=>{record($("manualMinutes").value);$("manualMinutes").value=""};
+$("goalInput").onchange=()=>{data.goal=Math.max(10,Math.min(1440,Number($("goalInput").value)||120));save();render()};
+$("exportBtn").onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="study-league-data.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let obj=JSON.parse(await f.text());if(typeof obj.totalXP!=="number"||!obj.days)throw Error();if(confirm("現在の記録を読み込んだデータで置き換える？")){data={...fresh(),...obj};save();render();toast("データを読み込みました")}}catch(err){toast("このファイルは読み込めません")};e.target.value=""};
+$("resetBtn").onclick=()=>{if(confirm("勉強時間・XP・リーグをすべてリセットする？")){data=fresh();save();render();toast("データをリセットしました")}};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));["league","study","profile"].forEach(v=>$(v+"View").classList.toggle("hidden",v!==b.dataset.tab));if(b.dataset.tab==="study")clock()});
+$("closeGuide").onclick=()=>{$("installGuide").classList.add("hidden");localStorage.setItem("studyLeagueGuideClosed","1")};
+if(localStorage.getItem("studyLeagueGuideClosed")==="1")$("installGuide").classList.add("hidden");
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
+window.addEventListener("pageshow",()=>{render();if(data.timer?.startAt&&!timerTick)timerTick=setInterval(clock,500)});
+render();if(data.timer?.startAt)timerTick=setInterval(clock,500);
+</script>
+</body></html>
